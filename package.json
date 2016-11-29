@@ -12,6 +12,10 @@
   },
   "author": "cabtravis@gmail.com",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenzhihao/easy-promise-queue"
+  },
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.4",
