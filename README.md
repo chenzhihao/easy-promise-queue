@@ -69,7 +69,16 @@ pq.add(() => {
   });
 });
 
-The added two promises will be executed one by one.
+// syntax sugar: 
+pq.add([promiseThunk, promiseThunk, promiseThunk]);
+// is equal to:
+pq.add(promiseThunk).add(promiseThunk).add(promiseThunk);
+// is equal to:
+pq.add(promiseThunk);
+pq.add(promiseThunk);
+pq.add(promiseThunk);
+
+//The added promises will be executed one by one.
 ```
 
 ## License
