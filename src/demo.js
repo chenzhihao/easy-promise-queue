@@ -20,7 +20,6 @@ pq.add(() => {
   });
 });
 
-
 for (let i = 3; i< 10; i++) {
   pq.add(() => {
     return new Promise(function (resolve, reject) {

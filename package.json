@@ -39,6 +39,7 @@
     "html-webpack-plugin": "^2.24.1",
     "http-server": "^0.9.0",
     "mocha": "^3.2.0",
+    "path": "^0.12.7",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.14.0"
