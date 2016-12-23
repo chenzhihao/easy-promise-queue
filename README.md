@@ -34,6 +34,16 @@ Use it directly in browse:
 ...
 </script>
 ```
+### Have a try:
+```
+git clone git@github.com:chenzhihao/easy-promise-queue.git
+
+npm i
+
+npm run dev
+
+// Then open ttp://localhost:8080
+```
 
 ### How to use:
 ####
