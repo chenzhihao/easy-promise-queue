@@ -27,7 +27,7 @@ class PromiseQueue {
   }
 
   add (fn) {
-    return new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       const run = () => {
         this._pendingCount++;
 
@@ -49,6 +49,8 @@ class PromiseQueue {
         this._queue.push(run);
       }
     });
+
+    return this;
   }
 
   // Promises which are not ready yet to run in the queue.

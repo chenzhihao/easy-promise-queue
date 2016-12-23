@@ -3,7 +3,7 @@ import PromiseQueue from '../src/PromiseQueue';
 
 const should = chai.should();
 
-describe('1. when the concurrency limit is 1', function () {
+describe('When the concurrency limit is 1', function () {
   it('only execute one promise at one time', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 1});
     promiseQueue.add(()=>{return new Promise(resolve => {
@@ -29,8 +29,7 @@ describe('1. when the concurrency limit is 1', function () {
   });
 });
 
-
-describe('1. when the concurrency limit is 2', function () {
+describe('When the concurrency limit is 2', function () {
   it('only execute two promises at one time', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 2});
     promiseQueue.add(()=>{return new Promise(resolve => {
@@ -65,4 +64,32 @@ describe('1. when the concurrency limit is 2', function () {
   });
 });
 
+describe('"Add" method can be chaining', function () {
+  it('the return value is itself', function (done) {
+    const promiseQueue = new PromiseQueue({concurrency: 1});
+    let pqInstance = promiseQueue.add(()=>{return new Promise(resolve => {
+      promiseQueue.pending.should.equal(1);
+      setTimeout(function () {
+        resolve(1);
+      }, 500)
+    })});
 
+    let checkIfIsPromiseQueueInstance = pqInstance instanceof PromiseQueue;
+
+    checkIfIsPromiseQueueInstance.should.be.true;
+
+    pqInstance.add(()=>{return new Promise(resolve => {
+      setTimeout(function () {
+        resolve(1);
+        promiseQueue.pending.should.equal(1);
+        done();
+      }, 500)
+    })});
+
+    // only one promise is waiting to run
+    promiseQueue.size.should.equal(1);
+
+    // only one promise is running
+    promiseQueue.pending.should.equal(1);
+  });
+});

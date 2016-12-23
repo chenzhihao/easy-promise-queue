@@ -2,6 +2,8 @@ import PromiseQueue from './PromiseQueue';
 
 let pq = new PromiseQueue({concurrency: 1});
 
+window.pq = pq;
+
 pq.add(() => {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
@@ -9,9 +11,7 @@ pq.add(() => {
       resolve();
     }, 1000)
   });
-});
-
-pq.add(() => {
+}).add(() => {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
       console.log('task 2');
@@ -20,7 +20,7 @@ pq.add(() => {
   });
 });
 
-for (let i = 3; i< 10; i++) {
+for (let i = 3; i < 10; i++) {
   pq.add(() => {
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
