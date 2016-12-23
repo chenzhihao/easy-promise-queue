@@ -3,7 +3,7 @@ import * as utils from './typeCheck';
 class PromiseQueue {
   constructor (opts) {
     this._queue = [];
-
+    this._pause = false;
     opts = Object.assign({
       concurrency: Infinity,
     }, opts);
@@ -19,6 +19,10 @@ class PromiseQueue {
   }
 
   _next () {
+    if (this._pause) {
+      return;
+    }
+
     this._ongoingCount--;
 
     if (this._queue.length > 0) {
@@ -28,6 +32,15 @@ class PromiseQueue {
     }
   }
 
+  pause () {
+    this._pause = true;
+  }
+
+  resume () {
+    this._pause = false;
+    this._next();
+  }
+
   add (fn) {
     if (utils.isArray(fn) && fn.every(utils.isFunction)) {
       return fn.length > 1 ? this.add(fn.shift()).add(fn) : this.add(fn[0]);
@@ -35,7 +48,6 @@ class PromiseQueue {
       new Promise((resolve, reject) => {
         const run = () => {
           this._ongoingCount++;
-
           fn().then(
             val => {
               resolve(val);
@@ -48,7 +60,7 @@ class PromiseQueue {
           );
         };
 
-        if (this._ongoingCount < this._concurrency) {
+        if (this._ongoingCount < this._concurrency && !this._pause) {
           run();
         } else {
           this._queue.push(run);

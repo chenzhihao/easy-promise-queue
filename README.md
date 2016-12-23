@@ -46,7 +46,7 @@ npm run dev
 ```
 
 ### How to use:
-####
+#### Add Promise thunk to run promise one by one:
 ```js
 
 let pq = new PromiseQueue({concurrency: 1});
@@ -79,6 +79,15 @@ pq.add(promiseThunk);
 pq.add(promiseThunk);
 
 //The added promises will be executed one by one.
+```
+#### How to pause a promise:
+```js
+...
+pq.pause();
+// you can still add promise, however none of them will run.
+
+pq.resume();
+// Promises will resume to run.
 ```
 
 ## License

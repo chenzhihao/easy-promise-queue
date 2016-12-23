@@ -8,6 +8,7 @@ let i = 0;
 function PromiseThunk () {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
+      console.log('===========');
       console.log(`task ${i}`);
       console.log('size:' , pq.size);
       console.log('ongoing:' , pq.ongoing);
@@ -23,9 +24,16 @@ for (let i = 3; i < 10; i++) {
   pq.add(() => {
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
+        console.log('===========');
         console.log(`task ${i}`);
         console.log('size:' , pq.size);
         console.log('ongoing:' , pq.ongoing);
+
+        if (i === 3) {
+          pq.pause();
+          console.log('Paused promise queue, please user pq.resume() to go on!')
+        }
+
         resolve();
       }, 1000)
     });
