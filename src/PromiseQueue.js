@@ -9,7 +9,7 @@ class PromiseQueue {
     }, opts);
 
     if (opts.concurrency < 1) {
-      throw new TypeError('Expected `concurrency` to be a number from 1 and up');
+      throw new TypeError('Expected `concurrency` to be a integer which is bigger than 0');
     }
 
     this._ongoingCount = 0;
@@ -56,7 +56,7 @@ class PromiseQueue {
       });
       return this;
     } else {
-      throw new TypeError('Arg must be a function which return a Promise, or an array of function which return a Promise');
+      throw new TypeError('Expected `arg` in add(arg) must be a function which return a Promise, or an array of function which return a Promise');
     }
   }
 

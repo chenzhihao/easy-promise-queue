@@ -42,7 +42,7 @@ npm i
 
 npm run dev
 
-// Then open ttp://localhost:8080
+// Then open http://localhost:8080
 ```
 
 ### How to use:
