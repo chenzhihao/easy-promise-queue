@@ -81,7 +81,7 @@ pq.add(promiseThunk);
 
 //The added promises will be executed one by one.
 ```
-#### How to pause a promise:
+#### How to pause the queue:
 ```js
 ...
 pq.pause();
