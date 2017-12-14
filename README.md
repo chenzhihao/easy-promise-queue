@@ -41,11 +41,6 @@ git clone git@github.com:chenzhihao/easy-promise-queue.git
 
 npm i
 
-npm run dev
-
-// Then open http://localhost:8080
-```
-
 ### How to use:
 #### Add Promise thunk to run promise one by one:
 ```js

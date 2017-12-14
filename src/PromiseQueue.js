@@ -73,12 +73,12 @@ class PromiseQueue {
   }
 
   // Promises which are not ready yet to run in the queue.
-  get size () {
+  get waitingCount () {
     return this._queue.length;
   }
 
   // Promises which are running but not done.
-  get ongoing () {
+  get ongoingCount () {
     return this._ongoingCount;
   }
 }
