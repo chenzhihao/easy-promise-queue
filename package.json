@@ -1,14 +1,11 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "",
   "main": "dist/PromiseQueue.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register",
-    "dev": "NODE_ENV=development webpack-dev-server --hot --inline --history-api-fallback --config ./webpack/webpack.dev.config.js",
-    "compile": "NODE_ENV=production webpack -p --config ./webpack/webpack.production.config.js",
-    "static": "sudo http-server ./dist -p 8024",
-    "build": "rm -rf ./dist/ && npm run compile"
+    "test": "mocha --require babel-register",
+    "compile": "rollup -c"
   },
   "author": "cabtravis@gmail.com",
   "license": "MIT",
@@ -27,22 +24,17 @@
     "waterfall"
   ],
   "devDependencies": {
-    "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-class-properties": "^6.10.2",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-polyfill": "^6.9.1",
-    "babel-preset-latest": "^6.16.0",
-    "babel-register": "^6.18.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "html-webpack-plugin": "^2.24.1",
-    "http-server": "^0.9.0",
-    "mocha": "^3.2.0",
+    "mocha": "^4.0.1",
     "path": "^0.12.7",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0"
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {}
 }
