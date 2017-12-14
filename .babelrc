@@ -1,9 +1,13 @@
+//https://github.com/rollup/rollup-plugin-babel#configuring-babel
 {
   "presets": [
-    "latest"
-  ],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread"
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
   ]
 }

@@ -1,95 +1,121 @@
-import chai from 'chai';
 import PromiseQueue from '../src/PromiseQueue';
-
-const should = chai.should();
+import assert from 'assert';
 
 describe('When the concurrency limit is 1', function () {
   it('only execute one promise at one time', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 1});
-    promiseQueue.add(()=>{return new Promise(resolve => {
-      promiseQueue.ongoing.should.equal(1);
-      setTimeout(function () {
-        resolve(1);
-      }, 500)
-    })});
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        assert.equal(promiseQueue.ongoingCount, 1);
+        setTimeout(function () {
+          resolve(1);
+        }, 500)
+      })
+    });
 
-    promiseQueue.add(()=>{return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(1);
-        promiseQueue.ongoing.should.equal(1);
-        done();
-      }, 500)
-    })});
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 1);
+        }, 500)
+      })
+    });
+
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 1);
+          done();
+        }, 500)
+      })
+    });
 
     // only one promise is waiting to run
-    promiseQueue.size.should.equal(1);
+    assert.equal(promiseQueue.waitingCount, 2);
 
     // only one promise is running
-    promiseQueue.ongoing.should.equal(1);
+    assert.equal(promiseQueue.ongoingCount, 1);
   });
 });
 
 describe('When the concurrency limit is 2', function () {
-  it('only execute two promises at one time', function (done) {
+  it('only execute not more than two promises at one time', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 2});
-    promiseQueue.add(()=>{return new Promise(resolve => {
-      promiseQueue.ongoing.should.equal(1);
-      promiseQueue.size.should.equal(1);
-      setTimeout(function () {
-        resolve(1);
-        promiseQueue.size.should.equal(0);
-      }, 500)
-    })});
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 2);
+        }, 500)
+      })
+    });
 
-    promiseQueue.add(()=>{return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(1);
-        promiseQueue.ongoing.should.equal(2);
-      }, 500)
-    })});
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 2);
+        }, 500)
+      })
+    });
 
-    promiseQueue.add(()=>{return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(1);
-        promiseQueue.ongoing.should.be.within(1,2);
-        done();
-      }, 500)
-    })});
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 2);
+        }, 500)
+      })
+    });
 
-    // only one promise is waiting to run
-    promiseQueue.size.should.equal(1);
+    promiseQueue.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.ok([1, 2].indexOf(promiseQueue.ongoingCount) > -1);
+          done();
+        }, 500)
+      })
+    });
+
+    // only two promise is waiting to run
+    assert.equal(promiseQueue.waitingCount, 2);
 
     // only two promises is running
-    promiseQueue.ongoing.should.equal(2);
+    assert.equal(promiseQueue.ongoingCount, 2);
   });
 });
 
 describe('"Add" method can be chaining', function () {
   it('the return value is itself', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 1});
-    let pqInstance = promiseQueue.add(()=>{return new Promise(resolve => {
-      promiseQueue.ongoing.should.equal(1);
-      setTimeout(function () {
-        resolve(1);
-      }, 500)
-    })});
+    let pqInstance = promiseQueue.add(() => {
+      return new Promise(resolve => {
+        assert.equal(promiseQueue.ongoingCount, 1);
+        setTimeout(function () {
+          resolve(1);
+        }, 500)
+      })
+    });
 
-    let checkIfIsPromiseQueueInstance = pqInstance instanceof PromiseQueue;
+    assert.ok(pqInstance instanceof PromiseQueue);
 
-    checkIfIsPromiseQueueInstance.should.be.true;
-
-    pqInstance.add(()=>{return new Promise(resolve => {
-      setTimeout(function () {
-        resolve(1);
-        promiseQueue.ongoing.should.equal(1);
-        done();
-      }, 500)
-    })});
+    pqInstance.add(() => {
+      return new Promise(resolve => {
+        setTimeout(function () {
+          resolve(1);
+          assert.equal(promiseQueue.ongoingCount, 1);
+          done();
+        }, 500)
+      })
+    });
 
     // only one promise is waiting to run
-    promiseQueue.size.should.equal(1);
+    assert.equal(promiseQueue.waitingCount, 1);
 
     // only one promise is running
-    promiseQueue.ongoing.should.equal(1);
+    assert.equal(promiseQueue.ongoingCount, 1);
   });
 });

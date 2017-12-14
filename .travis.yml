@@ -1,5 +1,5 @@
 language: node_js
 node_js:
-  - "v4.4.0"
+  - "v4.0.0"
 before_script:
   - npm install -g mocha
