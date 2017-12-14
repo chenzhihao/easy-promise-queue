@@ -5,7 +5,7 @@ class PromiseQueue {
     this._queue = [];
     this._pause = false;
     opts = Object.assign({
-      concurrency: Infinity,
+      concurrency: 1,
     }, opts);
 
     if (opts.concurrency < 1) {

@@ -6,6 +6,11 @@
 
 [![Build Status](https://travis-ci.org/chenzhihao/easy-promise-queue.svg)](https://travis-ci.org/chenzhihao/easy-promise-queue)
 
+## What is it used for
+
+It's a concurrent queue which can pause.
+When its concurrency is set as 1(by default), it's a FIFO queue.
+
 ## Installation
 ```bash
 $ npm install easy-promise-queue
