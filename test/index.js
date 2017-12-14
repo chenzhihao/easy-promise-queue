@@ -74,7 +74,7 @@ describe('When the concurrency limit is 2', function () {
       return new Promise(resolve => {
         setTimeout(function () {
           resolve(1);
-          assert.ok([1, 2].includes(promiseQueue.ongoingCount));
+          assert.ok([1, 2].indexOf(promiseQueue.ongoingCount) > -1);
           done();
         }, 500)
       })
