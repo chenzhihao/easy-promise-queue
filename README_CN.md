@@ -1,31 +1,31 @@
 # easy-promise-queue
 
-> Easy promise queue. Set a concurrency to execute promises in the queue.
+> 一个易用的promise队列
 
 [![NPM](https://nodei.co/npm/easy-promise-queue.png)](https://nodei.co/npm/easy-promise-queue/)
 
 [![Build Status](https://travis-ci.org/chenzhihao/easy-promise-queue.svg)](https://travis-ci.org/chenzhihao/easy-promise-queue)
 
-English [中文](https://github.com/chenzhihao/easy-promise-queue/blob/master/README_CN.md)
+中文 [English](https://github.com/chenzhihao/easy-promise-queue/blob/master/README.md)
 
-## What is it used for
+## 它的使用场景
 
-It's a concurrent queue which can pause.
+这是一个并发的promise队列，并且可以随时暂停
 
-When its concurrency is set as 1(by default), it's a FIFO queue.
+当并发数目被设置为1时（默认值），这就是一个先进先出（FIFO）队列
 
-You can put Promises into this queue. Only *X* promises can be executed concurrently as your configuration.
+你可以把promises放到队列中。只有X个promise可以同时执行。
 
-You can pause/resume this queue at any time. When the queue is paused, ongoing promises will keep running until done though.
+你可以在任何时候暂停/恢复队列。当队列被暂停的时候，已经开始执行的promise任然会继续完成执行。
 
-## Installation
+## 安装
 ```bash
 $ npm install easy-promise-queue
 ```
 
-## Usage
+## 用法
 
-### How to import:
+### 如何引入
 
 commonJS:
 
@@ -40,17 +40,17 @@ ES6:
 import PromiseQueue from 'easy-promise-queue';
 ```
 
-Use it directly in browse:
+浏览器中使用:
 
 ```js
 <script type="text/javascript" src="../dist/PromiseQueue.js"></script>
 ...
 </script>
 ```
-### Have a try:
+### 试一试:
 [Jsbin Demo](https://jsbin.com/cuvuno/1/edit?html,js,console,output)
 ```
-### How to use:
+### 如何使用:
 #### Add Promise thunk to run promise one by one:
 ```js
 
@@ -74,7 +74,7 @@ pq.add(() => {
   });
 });
 
-// syntax sugar:
+// syntax sugar: 
 pq.add([promiseThunk, promiseThunk, promiseThunk]);
 // is equal to:
 pq.add(promiseThunk).add(promiseThunk).add(promiseThunk);
@@ -85,7 +85,7 @@ pq.add(promiseThunk);
 
 //The added promises will be executed one by one.
 ```
-#### How to pause the queue:
+#### 暂停队列:
 ```js
 ...
 pq.pause();
