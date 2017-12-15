@@ -4,7 +4,7 @@ import uglify from 'rollup-plugin-uglify';
 
 export default {
   entry: 'src/PromiseQueue.js',
-  dest: 'build/PromiseQueue.js',
+  dest: 'dist/PromiseQueue.js',
   format: 'umd',
   moduleName: 'PromiseQueue',
   sourceMap: true,
