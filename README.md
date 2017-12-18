@@ -48,7 +48,7 @@ Use it directly in browse:
 </script>
 ```
 ### Have a try:
-[Jsbin Demo](https://jsbin.com/cuvuno/1/edit?html,js,console,output)
+[Jsbin Demo](https://jsbin.com/cuvuno/edit?html,js,console,output)
 ```
 ### How to use:
 #### Add Promise thunk to run promise one by one:
