@@ -48,7 +48,7 @@ import PromiseQueue from 'easy-promise-queue';
 </script>
 ```
 ### 试一试:
-[Jsbin Demo](https://jsbin.com/cuvuno/1/edit?html,js,console,output)
+[Jsbin Demo](https://jsbin.com/cuvuno/edit?html,js,console,output)
 ```
 ### 如何使用:
 #### Add Promise thunk to run promise one by one:
