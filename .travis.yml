@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - "v4.0.0"
 before_script:
+  - npm install --save-dev babel-register
   - npm install -g mocha
