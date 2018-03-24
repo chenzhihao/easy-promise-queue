@@ -9,7 +9,7 @@ class PromiseQueue {
     }, opts);
 
     if (opts.concurrency < 1) {
-      throw new TypeError('Expected `concurrency` to be a integer which is bigger than 0');
+      throw new TypeError('Expected `concurrency` to be an integer which is bigger than 0');
     }
 
     this._ongoingCount = 0;
