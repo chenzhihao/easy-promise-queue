@@ -29,13 +29,13 @@ $ npm install easy-promise-queue
 
 commonJS:
 
-```js
+```javascript
 require ('easy-promise-queue');
 ```
 
 ES6:
 
-```js
+```javascript
 // ES6:
 import PromiseQueue from 'easy-promise-queue';
 ```
@@ -52,7 +52,7 @@ Use it directly in browse:
 ```
 ### How to use:
 #### Add Promise thunk to run promise one by one:
-```js
+```javascript
 
 let pq = new PromiseQueue({concurrency: 1});
 
@@ -86,7 +86,7 @@ pq.add(promiseThunk);
 //The added promises will be executed one by one.
 ```
 #### How to pause the queue:
-```js
+```javascript
 ...
 pq.pause();
 // you can still add promise, however none of them will run.
