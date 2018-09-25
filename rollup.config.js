@@ -3,11 +3,13 @@ import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
 
 export default {
-  entry: 'src/PromiseQueue.js',
-  dest: 'dist/PromiseQueue.js',
-  format: 'umd',
-  moduleName: 'PromiseQueue',
-  sourceMap: true,
+  input: 'src/PromiseQueue.js',
+  output: {
+    name: 'PromiseQueue',
+    sourcemap: true,
+    file: 'dist/PromiseQueue.js',
+    format: 'umd',
+  },
   plugins: [
     babel({
       babelrc: false, // stops babel from using .babelrc files

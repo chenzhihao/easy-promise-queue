@@ -1,6 +1,6 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "description": "",
   "main": "dist/PromiseQueue.js",
   "scripts": {
@@ -24,13 +24,13 @@
     "waterfall"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "mocha": "^4.0.1",
-    "rollup": "^0.52.1",
-    "rollup-plugin-babel": "^3.0.2",
+    "mocha": "^4.1.0",
+    "rollup": "^0.52.3",
+    "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {}
