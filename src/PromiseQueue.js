@@ -41,7 +41,11 @@ class PromiseQueue {
     this._next();
   }
 
-  add (fn) {
+  prioritize (fn) {
+    return this.add(fn, true)
+  }
+
+  add (fn, isPriority) {
     if (utils.isArray(fn) && fn.every(utils.isFunction)) {
       return fn.length > 1 ? this.add(fn.shift()).add(fn) : this.add(fn[0]);
     } else if (utils.isFunction(fn)) {
@@ -63,7 +67,8 @@ class PromiseQueue {
         if (this._ongoingCount < this._concurrency && !this._pause) {
           run();
         } else {
-          this._queue.push(run);
+          // Process priority jobs next in line
+          isPriority ? this._queue.unshift(run) : this._queue.push(run)
         }
       });
       return this;
