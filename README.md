@@ -85,6 +85,15 @@ pq.add(promiseThunk);
 
 //The added promises will be executed one by one.
 ```
+#### Adding a high-priority task to the queue:
+```javascript
+let pq = new PromiseQueue({concurrency: 1}); // any concurrency works
+//
+pq.add(promiseThunk);
+pq.add(promiseThunk);
+pq.prioritize(promiseThunk); // this promise will be processed ASAP/next in line
+```
+
 #### How to pause the queue:
 ```javascript
 ...
