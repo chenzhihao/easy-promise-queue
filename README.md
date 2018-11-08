@@ -25,7 +25,7 @@ $ npm install easy-promise-queue
 
 ## Usage
 
-### How to import:
+### How to import
 
 commonJS:
 
@@ -47,10 +47,10 @@ Use it directly in browse:
 ...
 </script>
 ```
-### Have a try:
+### Have a try
 [Jsbin Demo](https://jsbin.com/cuvuno/edit?html,js,console,output)
 
-### How to use:
+### How to use
 #### Add Promise thunk to run promise one by one:
 
 ```javascript
