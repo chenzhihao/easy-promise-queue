@@ -1,6 +1,6 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "main": "dist/PromiseQueue.js",
   "scripts": {
