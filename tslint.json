@@ -1,0 +1,20 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+      "no-console": {
+          "severity": "warning",
+          "options": ["log", "time", "timeEnd", "trace"]
+      },
+      "object-literal-sort-keys": false,
+      "no-string-literal": true,
+      "object-literal-key-quotes": {
+          "options": ["consistent-as-needed"]
+      },
+      "variable-name": {
+          "options": ["allow-leading-underscore"]
+      }
+  },
+  "rulesDirectory": []
+}

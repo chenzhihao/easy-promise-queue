@@ -1,7 +1,17 @@
 import * as utils from './typeCheck';
 
+interface PromiseQueueOpts {
+  concurrency: number;
+}
+
 class PromiseQueue {
-  constructor (opts) {
+  private _queue: Function[];
+  private _pause: boolean;
+  private _ongoingCount: number;
+  private _concurrency: number;
+  private _resolveEmpty: () => void = () => { };
+
+  constructor(opts: PromiseQueueOpts) {
     this._queue = [];
     this._pause = false;
     opts = Object.assign({
@@ -14,11 +24,9 @@ class PromiseQueue {
 
     this._ongoingCount = 0;
     this._concurrency = opts.concurrency;
-    this._resolveEmpty = () => {
-    };
   }
 
-  _next () {
+  _next() {
     if (this._pause) {
       return;
     }
@@ -26,22 +34,25 @@ class PromiseQueue {
     this._ongoingCount--;
 
     if (this._queue.length > 0) {
-      this._queue.shift()();
+      const firstQueueTask = this._queue.shift();
+      if (firstQueueTask) {
+        firstQueueTask();
+      }
     } else {
       this._resolveEmpty();
     }
   }
 
-  pause () {
+  pause() {
     this._pause = true;
   }
 
-  resume () {
+  resume() {
     this._pause = false;
     this._next();
   }
 
-  add (fn) {
+  add(fn: any): any {
     if (utils.isArray(fn) && fn.every(utils.isFunction)) {
       return fn.length > 1 ? this.add(fn.shift()).add(fn) : this.add(fn[0]);
     } else if (utils.isFunction(fn)) {
@@ -49,11 +60,11 @@ class PromiseQueue {
         const run = () => {
           this._ongoingCount++;
           fn().then(
-            val => {
+            (val: any) => {
               resolve(val);
               this._next();
             },
-            err => {
+            (err: Error) => {
               reject(err);
               this._next();
             }
@@ -73,12 +84,12 @@ class PromiseQueue {
   }
 
   // Promises which are not ready yet to run in the queue.
-  get waitingCount () {
+  get waitingCount() {
     return this._queue.length;
   }
 
   // Promises which are running but not done.
-  get ongoingCount () {
+  get ongoingCount() {
     return this._ongoingCount;
   }
 }
