@@ -1,17 +1,16 @@
-import * as utils from './typeCheck';
+import * as utils from "./typeCheck";
 
-interface PromiseQueueOpts {
+interface IPromiseQueueOpts {
   concurrency: number;
 }
 
 class PromiseQueue {
-  private _queue: Function[];
+  private _queue: Array<() => any>;
   private _pause: boolean;
   private _ongoingCount: number;
   private _concurrency: number;
-  private _resolveEmpty: () => void = () => { };
 
-  constructor(opts: PromiseQueueOpts) {
+  constructor(opts: IPromiseQueueOpts) {
     this._queue = [];
     this._pause = false;
     opts = Object.assign({
@@ -19,40 +18,23 @@ class PromiseQueue {
     }, opts);
 
     if (opts.concurrency < 1) {
-      throw new TypeError('Expected `concurrency` to be an integer which is bigger than 0');
+      throw new TypeError("Expected `concurrency` to be an integer which is bigger than 0");
     }
 
     this._ongoingCount = 0;
     this._concurrency = opts.concurrency;
   }
 
-  _next() {
-    if (this._pause) {
-      return;
-    }
-
-    this._ongoingCount--;
-
-    if (this._queue.length > 0) {
-      const firstQueueTask = this._queue.shift();
-      if (firstQueueTask) {
-        firstQueueTask();
-      }
-    } else {
-      this._resolveEmpty();
-    }
-  }
-
-  pause() {
+  public pause() {
     this._pause = true;
   }
 
-  resume() {
+  public resume() {
     this._pause = false;
     this._next();
   }
 
-  add(fn: any): any {
+  public add(fn: () => Promise<any> | Array<() => Promise<any>>): PromiseQueue | TypeError {
     if (utils.isArray(fn) && fn.every(utils.isFunction)) {
       return fn.length > 1 ? this.add(fn.shift()).add(fn) : this.add(fn[0]);
     } else if (utils.isFunction(fn)) {
@@ -91,6 +73,25 @@ class PromiseQueue {
   // Promises which are running but not done.
   get ongoingCount() {
     return this._ongoingCount;
+  }
+
+  private _resolveEmpty: () => void = () => undefined;
+
+  private _next() {
+    if (this._pause) {
+      return;
+    }
+
+    this._ongoingCount--;
+
+    if (this._queue.length > 0) {
+      const firstQueueTask = this._queue.shift();
+      if (firstQueueTask) {
+        firstQueueTask();
+      }
+    } else {
+      this._resolveEmpty();
+    }
   }
 }
 
