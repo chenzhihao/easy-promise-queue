@@ -3,5 +3,8 @@ node_js:
   - "v6.0.0"
   - "v8.0.0"
   - "v10.0.0"
-before_script:
+scripts:
+  - npm install codecov -g
   - npm install -g mocha
+after_success:
+  - codecov
