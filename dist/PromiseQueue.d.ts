@@ -1,4 +1,4 @@
-interface PromiseQueueOpts {
+interface IPromiseQueueOpts {
     concurrency: number;
 }
 declare class PromiseQueue {
@@ -6,13 +6,13 @@ declare class PromiseQueue {
     private _pause;
     private _ongoingCount;
     private _concurrency;
-    private _resolveEmpty;
-    constructor(opts: PromiseQueueOpts);
-    _next(): void;
+    constructor(opts: IPromiseQueueOpts);
     pause(): void;
     resume(): void;
-    add(fn: any): any;
+    add(fn: () => Promise<any>): PromiseQueue | TypeError;
     readonly waitingCount: number;
     readonly ongoingCount: number;
+    private _resolveEmpty;
+    private _next;
 }
 export default PromiseQueue;

@@ -1,10 +1,11 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/PromiseQueue.js",
   "scripts": {
-    "compile": "tsc --declaration"
+    "test": "jest",
+    "build": "tsc --declaration"
   },
   "author": "cabtravis@gmail.com",
   "license": "MIT",
