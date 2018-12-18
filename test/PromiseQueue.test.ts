@@ -88,7 +88,7 @@ describe('When the concurrency limit is 2', function () {
   });
 });
 
-describe('"Add" method can be chaining', function () {
+describe('"add" method can be chaining', function () {
   it('the return value is itself', function (done) {
     const promiseQueue = new PromiseQueue({concurrency: 1});
     let pqInstance = promiseQueue.add(() => {
@@ -120,5 +120,34 @@ describe('"Add" method can be chaining', function () {
     // only one promise is running
     assert.strictEqual(promiseQueue.ongoingCount, 1);
   });
+});
 
+describe('The parameter of "add" method can be Array', function () {
+  it('the return value is itself', function (done) {
+    const promiseQueue = new PromiseQueue({concurrency: 1});
+
+    const promises = [() => {
+      return new Promise(resolve => {
+        assert.strictEqual(promiseQueue.ongoingCount, 1);
+        setTimeout(function () {
+          // only one promise is waiting to run
+          assert.strictEqual(promiseQueue.waitingCount, 1);
+
+          // only one promise is running
+          assert.strictEqual(promiseQueue.ongoingCount, 1);
+          resolve(1);
+        }, 500);
+      })
+    }, () => {
+      return new Promise(resolve => {
+        assert.strictEqual(promiseQueue.ongoingCount, 1);
+        setTimeout(function () {
+          resolve(1);
+          done()
+        }, 500)
+      })
+    }];
+    let pqInstance = promiseQueue.add(promises);
+    assert.ok(pqInstance instanceof PromiseQueue);
+  });
 });

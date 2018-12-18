@@ -2,6 +2,8 @@ interface IPromiseQueueOpts {
   concurrency: number;
 }
 
+type PromiseThunk = () => Promise<any>;
+
 class PromiseQueue {
   private _queue: Array<() => any>;
   private _pause: boolean;
@@ -32,29 +34,39 @@ class PromiseQueue {
     this._next();
   }
 
-  public add(fn: () => Promise<any>): PromiseQueue | TypeError {
-    new Promise((resolve, reject) => {
-      const run = () => {
-        this._ongoingCount++;
-        fn().then(
-          (val: any) => {
-            resolve(val);
-            this._next();
-          },
-          (err: Error) => {
-            reject(err);
-            this._next();
-          }
-        );
-      };
-
-      if (this._ongoingCount < this._concurrency && !this._pause) {
-        run();
-      } else {
-        this._queue.push(run);
+  public add(fn: PromiseThunk | Array<PromiseThunk>): PromiseQueue | TypeError {
+    if (Array.isArray(fn)) {
+      if (fn.length > 1) {
+        const res = this.add(fn.shift()!);
+        if (!(res instanceof TypeError)) {
+          return this.add(fn)
+        }
       }
-    });
-    return this;
+      return this.add(fn[0]);
+    } else {
+      new Promise((resolve, reject) => {
+        const run = () => {
+          this._ongoingCount++;
+          (fn as () => Promise<any>)().then(
+            (val: any) => {
+              resolve(val);
+              this._next();
+            },
+            (err: Error) => {
+              reject(err);
+              this._next();
+            }
+          );
+        };
+
+        if (this._ongoingCount < this._concurrency && !this._pause) {
+          run();
+        } else {
+          this._queue.push(run);
+        }
+      });
+      return this;
+    }
   }
 
   // Promises which are not ready yet to run in the queue.

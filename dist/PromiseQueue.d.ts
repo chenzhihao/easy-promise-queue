@@ -1,6 +1,7 @@
 interface IPromiseQueueOpts {
     concurrency: number;
 }
+declare type PromiseThunk = () => Promise<any>;
 declare class PromiseQueue {
     private _queue;
     private _pause;
@@ -9,7 +10,7 @@ declare class PromiseQueue {
     constructor(opts: IPromiseQueueOpts);
     pause(): void;
     resume(): void;
-    add(fn: () => Promise<any>): PromiseQueue | TypeError;
+    add(fn: PromiseThunk | Array<PromiseThunk>): PromiseQueue | TypeError;
     readonly waitingCount: number;
     readonly ongoingCount: number;
     private _resolveEmpty;

@@ -31,25 +31,36 @@
             this._next();
         }
         add(fn) {
-            new Promise((resolve, reject) => {
-                const run = () => {
-                    this._ongoingCount++;
-                    fn().then((val) => {
-                        resolve(val);
-                        this._next();
-                    }, (err) => {
-                        reject(err);
-                        this._next();
-                    });
-                };
-                if (this._ongoingCount < this._concurrency && !this._pause) {
-                    run();
+            if (Array.isArray(fn)) {
+                if (fn.length > 1) {
+                    const res = this.add(fn.shift());
+                    if (!(res instanceof TypeError)) {
+                        return this.add(fn);
+                    }
                 }
-                else {
-                    this._queue.push(run);
-                }
-            });
-            return this;
+                return this.add(fn[0]);
+            }
+            else {
+                new Promise((resolve, reject) => {
+                    const run = () => {
+                        this._ongoingCount++;
+                        fn().then((val) => {
+                            resolve(val);
+                            this._next();
+                        }, (err) => {
+                            reject(err);
+                            this._next();
+                        });
+                    };
+                    if (this._ongoingCount < this._concurrency && !this._pause) {
+                        run();
+                    }
+                    else {
+                        this._queue.push(run);
+                    }
+                });
+                return this;
+            }
         }
         // Promises which are not ready yet to run in the queue.
         get waitingCount() {
