@@ -1,11 +1,11 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "main": "dist/PromiseQueue.js",
   "scripts": {
-    "test": "mocha --require babel-register",
-    "compile": "rollup -c"
+    "test": "jest",
+    "build": "tsc --declaration"
   },
   "author": "cabtravis@gmail.com",
   "license": "MIT",
@@ -24,14 +24,12 @@
     "waterfall"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "mocha": "^4.1.0",
-    "rollup": "^0.52.3",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-uglify": "^2.0.1"
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.15",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
   },
   "dependencies": {}
 }

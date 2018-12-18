@@ -1,2 +1,91 @@
-!function(n,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):n.PromiseQueue=e()}(this,function(){"use strict";function t(n){return n&&"[object Function]"===Object.prototype.toString.call(n)}var n=function(){function o(n,e){for(var t=0;t<e.length;t++){var o=e[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(n,o.key,o)}}return function(n,e,t){return e&&o(n.prototype,e),t&&o(n,t),n}}();return function(){function e(n){if(function(n,e){if(!(n instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),this._queue=[],this._pause=!1,(n=Object.assign({concurrency:1},n)).concurrency<1)throw new TypeError("Expected `concurrency` to be a integer which is bigger than 0");this._ongoingCount=0,this._concurrency=n.concurrency,this._resolveEmpty=function(){}}return n(e,[{key:"_next",value:function(){this._pause||(this._ongoingCount--,0<this._queue.length?this._queue.shift()():this._resolveEmpty())}},{key:"pause",value:function(){this._pause=!0}},{key:"resume",value:function(){this._pause=!1,this._next()}},{key:"add",value:function(o){var n,i=this;if((n=o)&&"[object Array]"===Object.prototype.toString.call(n)&&o.every(t))return 1<o.length?this.add(o.shift()).add(o):this.add(o[0]);if(t(o))return new Promise(function(e,t){var n=function(){i._ongoingCount++,o().then(function(n){e(n),i._next()},function(n){t(n),i._next()})};i._ongoingCount<i._concurrency&&!i._pause?n():i._queue.push(n)}),this;throw new TypeError("Expected `arg` in add(arg) must be a function which return a Promise, or an array of function which return a Promise")}},{key:"waitingCount",get:function(){return this._queue.length}},{key:"ongoingCount",get:function(){return this._ongoingCount}}]),e}()});
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class PromiseQueue {
+        constructor(opts) {
+            this._resolveEmpty = () => undefined;
+            this._queue = [];
+            this._pause = false;
+            opts = Object.assign({
+                concurrency: 1,
+            }, opts);
+            if (opts.concurrency < 1) {
+                throw new TypeError("Expected `concurrency` to be an integer which is bigger than 0");
+            }
+            this._ongoingCount = 0;
+            this._concurrency = opts.concurrency;
+        }
+        pause() {
+            this._pause = true;
+        }
+        resume() {
+            this._pause = false;
+            this._next();
+        }
+        add(fn) {
+            if (Array.isArray(fn)) {
+                if (fn.length > 1) {
+                    const res = this.add(fn.shift());
+                    if (!(res instanceof TypeError)) {
+                        return this.add(fn);
+                    }
+                }
+                return this.add(fn[0]);
+            }
+            else {
+                new Promise((resolve, reject) => {
+                    const run = () => {
+                        this._ongoingCount++;
+                        fn().then((val) => {
+                            resolve(val);
+                            this._next();
+                        }, (err) => {
+                            reject(err);
+                            this._next();
+                        });
+                    };
+                    if (this._ongoingCount < this._concurrency && !this._pause) {
+                        run();
+                    }
+                    else {
+                        this._queue.push(run);
+                    }
+                });
+                return this;
+            }
+        }
+        // Promises which are not ready yet to run in the queue.
+        get waitingCount() {
+            return this._queue.length;
+        }
+        // Promises which are running but not done.
+        get ongoingCount() {
+            return this._ongoingCount;
+        }
+        _next() {
+            if (this._pause) {
+                return;
+            }
+            this._ongoingCount--;
+            if (this._queue.length > 0) {
+                const firstQueueTask = this._queue.shift();
+                if (firstQueueTask) {
+                    firstQueueTask();
+                }
+            }
+            else {
+                this._resolveEmpty();
+            }
+        }
+    }
+    exports.default = PromiseQueue;
+});
 //# sourceMappingURL=PromiseQueue.js.map

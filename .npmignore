@@ -1,3 +1,5 @@
-webpack
-indexTemplate.html
-.babelrc
+src
+yarn.lock
+tsconfig.json
+tslint.json
+.travis.yml
