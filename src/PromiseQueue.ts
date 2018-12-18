@@ -1,5 +1,3 @@
-import * as utils from "./typeCheck";
-
 interface IPromiseQueueOpts {
   concurrency: number;
 }
@@ -34,35 +32,29 @@ class PromiseQueue {
     this._next();
   }
 
-  public add(fn: () => Promise<any> | Array<() => Promise<any>>): PromiseQueue | TypeError {
-    if (utils.isArray(fn) && fn.every(utils.isFunction)) {
-      return fn.length > 1 ? this.add(fn.shift()).add(fn) : this.add(fn[0]);
-    } else if (utils.isFunction(fn)) {
-      new Promise((resolve, reject) => {
-        const run = () => {
-          this._ongoingCount++;
-          fn().then(
-            (val: any) => {
-              resolve(val);
-              this._next();
-            },
-            (err: Error) => {
-              reject(err);
-              this._next();
-            }
-          );
-        };
+  public add(fn: () => Promise<any>): PromiseQueue | TypeError {
+    new Promise((resolve, reject) => {
+      const run = () => {
+        this._ongoingCount++;
+        fn().then(
+          (val: any) => {
+            resolve(val);
+            this._next();
+          },
+          (err: Error) => {
+            reject(err);
+            this._next();
+          }
+        );
+      };
 
-        if (this._ongoingCount < this._concurrency && !this._pause) {
-          run();
-        } else {
-          this._queue.push(run);
-        }
-      });
-      return this;
-    } else {
-      throw new TypeError('Expected `arg` in add(arg) must be a function which return a Promise, or an array of function which return a Promise');
-    }
+      if (this._ongoingCount < this._concurrency && !this._pause) {
+        run();
+      } else {
+        this._queue.push(run);
+      }
+    });
+    return this;
   }
 
   // Promises which are not ready yet to run in the queue.

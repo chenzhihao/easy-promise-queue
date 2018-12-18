@@ -76,8 +76,6 @@ pq.add(() => {
 });
 
 // syntax sugar:
-pq.add([promiseThunk, promiseThunk, promiseThunk]);
-// is equal to:
 pq.add(promiseThunk).add(promiseThunk).add(promiseThunk);
 // is equal to:
 pq.add(promiseThunk);
