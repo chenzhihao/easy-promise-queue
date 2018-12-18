@@ -5,7 +5,7 @@
 [![NPM](https://nodei.co/npm/easy-promise-queue.png)](https://nodei.co/npm/easy-promise-queue/)
 
 [![Build Status](https://travis-ci.org/chenzhihao/easy-promise-queue.svg)](https://travis-ci.org/chenzhihao/easy-promise-queue)
-[![Coverage Status](https://coveralls.io/repos/github/chenzhihao/easy-promise-queue/badge.svg?branch=master)](https://coveralls.io/github/chenzhihao/easy-promise-queue?branch=master)
+[![codecov](https://codecov.io/gh/chenzhihao/easy-promise-queue/branch/master/graph/badge.svg)](https://codecov.io/gh/chenzhihao/easy-promise-queue)
 
 English [中文](https://github.com/chenzhihao/easy-promise-queue/blob/master/README_CN.md)
 
