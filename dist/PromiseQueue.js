@@ -9,9 +9,9 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class PromiseQueue {
-        constructor(opts) {
-            this._resolveEmpty = () => undefined;
+    var PromiseQueue = /** @class */ (function () {
+        function PromiseQueue(opts) {
+            this._resolveEmpty = function () { return undefined; };
             this._queue = [];
             this._pause = false;
             opts = Object.assign({
@@ -23,17 +23,18 @@
             this._ongoingCount = 0;
             this._concurrency = opts.concurrency;
         }
-        pause() {
+        PromiseQueue.prototype.pause = function () {
             this._pause = true;
-        }
-        resume() {
+        };
+        PromiseQueue.prototype.resume = function () {
             this._pause = false;
             this._next();
-        }
-        add(fn) {
+        };
+        PromiseQueue.prototype.add = function (fn) {
+            var _this = this;
             if (Array.isArray(fn)) {
                 if (fn.length > 1) {
-                    const res = this.add(fn.shift());
+                    var res = this.add(fn.shift());
                     if (!(res instanceof TypeError)) {
                         return this.add(fn);
                     }
@@ -41,42 +42,51 @@
                 return this.add(fn[0]);
             }
             else {
-                new Promise((resolve, reject) => {
-                    const run = () => {
-                        this._ongoingCount++;
-                        fn().then((val) => {
+                // tslint:disable-next-line
+                new Promise(function (resolve, reject) {
+                    var run = function () {
+                        _this._ongoingCount++;
+                        fn().then(function (val) {
                             resolve(val);
-                            this._next();
-                        }, (err) => {
+                            _this._next();
+                        }, function (err) {
                             reject(err);
-                            this._next();
+                            _this._next();
                         });
                     };
-                    if (this._ongoingCount < this._concurrency && !this._pause) {
+                    if (_this._ongoingCount < _this._concurrency && !_this._pause) {
                         run();
                     }
                     else {
-                        this._queue.push(run);
+                        _this._queue.push(run);
                     }
                 });
                 return this;
             }
-        }
-        // Promises which are not ready yet to run in the queue.
-        get waitingCount() {
-            return this._queue.length;
-        }
-        // Promises which are running but not done.
-        get ongoingCount() {
-            return this._ongoingCount;
-        }
-        _next() {
+        };
+        Object.defineProperty(PromiseQueue.prototype, "waitingCount", {
+            // Promises which are not ready yet to run in the queue.
+            get: function () {
+                return this._queue.length;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(PromiseQueue.prototype, "ongoingCount", {
+            // Promises which are running but not done.
+            get: function () {
+                return this._ongoingCount;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        PromiseQueue.prototype._next = function () {
             if (this._pause) {
                 return;
             }
             this._ongoingCount--;
             if (this._queue.length > 0) {
-                const firstQueueTask = this._queue.shift();
+                var firstQueueTask = this._queue.shift();
                 if (firstQueueTask) {
                     firstQueueTask();
                 }
@@ -84,8 +94,9 @@
             else {
                 this._resolveEmpty();
             }
-        }
-    }
+        };
+        return PromiseQueue;
+    }());
     exports.default = PromiseQueue;
 });
 //# sourceMappingURL=PromiseQueue.js.map

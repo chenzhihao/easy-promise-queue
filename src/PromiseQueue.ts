@@ -4,7 +4,7 @@ interface IPromiseQueueOpts {
 
 type PromiseThunk = () => Promise<any>;
 
-class PromiseQueue {
+export default class PromiseQueue {
   private _queue: Array<() => any>;
   private _pause: boolean;
   private _ongoingCount: number;
@@ -34,16 +34,17 @@ class PromiseQueue {
     this._next();
   }
 
-  public add(fn: PromiseThunk | Array<PromiseThunk>): PromiseQueue | TypeError {
+  public add(fn: PromiseThunk | PromiseThunk[]): PromiseQueue | TypeError {
     if (Array.isArray(fn)) {
       if (fn.length > 1) {
         const res = this.add(fn.shift()!);
         if (!(res instanceof TypeError)) {
-          return this.add(fn)
+          return this.add(fn);
         }
       }
       return this.add(fn[0]);
     } else {
+      // tslint:disable-next-line
       new Promise((resolve, reject) => {
         const run = () => {
           this._ongoingCount++;
@@ -55,7 +56,7 @@ class PromiseQueue {
             (err: Error) => {
               reject(err);
               this._next();
-            }
+            },
           );
         };
 
@@ -98,5 +99,3 @@ class PromiseQueue {
     }
   }
 }
-
-export default PromiseQueue;
