@@ -40,15 +40,6 @@ es2015:
 import PromiseQueue from 'easy-promise-queue';
 ```
 
-浏览器中使用:
-
-```js
-<script type="text/javascript" src="../dist/PromiseQueue.js"></script>
-...
-</script>
-```
-### 试一试:
-[Jsbin Demo](https://jsbin.com/cuvuno/edit?html,js,console,output)
 ```
 ### 如何使用:
 #### Add Promise thunk to run promise one by one:

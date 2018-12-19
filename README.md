@@ -40,16 +40,6 @@ es2015:
 import PromiseQueue from 'easy-promise-queue';
 ```
 
-Use it directly in browse:
-
-```js
-<script type="text/javascript" src="../dist/PromiseQueue.js"></script>
-...
-</script>
-```
-### Have a try
-[Jsbin Demo](https://jsbin.com/cuvuno/edit?html,js,console,output)
-
 ### How to use
 #### Add Promise thunk to run promise one by one:
 
