@@ -1,8 +1,12 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.5.1",
-  "description": "",
+  "version": "0.5.3",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "description": "An easy JavaScript Promise queue which is automatically executed, concurrency controlled and suspendable.",
   "main": "dist/PromiseQueue.js",
+  "types": "dist/PromiseQueue.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc --declaration"
