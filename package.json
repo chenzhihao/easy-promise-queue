@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/chenzhihao/easy-promise-queue"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "promise",
     "queue",
