@@ -2,7 +2,7 @@ interface IPromiseQueueOpts {
     concurrency: number;
 }
 declare type PromiseThunk = () => Promise<any>;
-export declare class PromiseQueue {
+export default class PromiseQueue {
     private _queue;
     private _pause;
     private _ongoingCount;

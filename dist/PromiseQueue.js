@@ -97,6 +97,6 @@
         };
         return PromiseQueue;
     }());
-    exports.PromiseQueue = PromiseQueue;
+    exports.default = PromiseQueue;
 });
 //# sourceMappingURL=PromiseQueue.js.map

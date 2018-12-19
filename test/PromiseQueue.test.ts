@@ -1,5 +1,5 @@
 import assert from "assert";
-import { PromiseQueue } from "../src/PromiseQueue";
+import PromiseQueue from "../src/PromiseQueue";
 
 describe("When the concurrency limit is 1", () => {
   it("only execute one promise at one time", (done) => {

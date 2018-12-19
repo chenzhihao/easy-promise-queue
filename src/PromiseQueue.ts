@@ -4,7 +4,7 @@ interface IPromiseQueueOpts {
 
 type PromiseThunk = () => Promise<any>;
 
-export class PromiseQueue {
+export default class PromiseQueue {
   private _queue: Array<() => any>;
   private _pause: boolean;
   private _ongoingCount: number;

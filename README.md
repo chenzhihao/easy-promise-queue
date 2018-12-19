@@ -31,13 +31,12 @@ $ npm install easy-promise-queue
 commonJS:
 
 ```javascript
-require ('easy-promise-queue');
+const PromiseQueue = require("easy-promise-queue").default;
 ```
 
-ES6:
+es2015:
 
 ```javascript
-// ES6:
 import PromiseQueue from 'easy-promise-queue';
 ```
 
