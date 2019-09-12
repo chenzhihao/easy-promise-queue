@@ -40,11 +40,10 @@ es2015:
 import PromiseQueue from 'easy-promise-queue';
 ```
 
-```
 ### 如何使用:
 #### Add Promise thunk to run promise one by one:
-```js
 
+```javascript
 let pq = new PromiseQueue({concurrency: 1});
 
 pq.add(() => {
