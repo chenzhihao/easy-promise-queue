@@ -4,8 +4,8 @@
 
 [![NPM](https://nodei.co/npm/easy-promise-queue.png)](https://nodei.co/npm/easy-promise-queue/)
 
-[![Build Status](https://travis-ci.org/chenzhihao/easy-promise-queue.svg)](https://travis-ci.org/chenzhihao/easy-promise-queue)
-[![Coverage Status](https://coveralls.io/repos/github/chenzhihao/easy-promise-queue/badge.svg?branch=master)](https://coveralls.io/github/chenzhihao/easy-promise-queue?branch=master)
+[![Build Status](https://travis-ci.org/chenzhihao/easy-promise-queue.svg?branch=master)](https://travis-ci.org/chenzhihao/easy-promise-queue)
+[![codecov](https://codecov.io/gh/chenzhihao/easy-promise-queue/branch/master/graph/badge.svg)](https://codecov.io/gh/chenzhihao/easy-promise-queue)
 
 中文 [English](https://github.com/chenzhihao/easy-promise-queue/blob/master/README.md)
 
