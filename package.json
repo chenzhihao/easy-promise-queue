@@ -1,8 +1,8 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "description": "An easy JavaScript Promise queue which is automatically executed, concurrency controlled and suspendable.",
   "main": "dist/PromiseQueue.js",
@@ -31,12 +31,12 @@
     "waterfall"
   ],
   "devDependencies": {
-    "@types/jest": "^23.3.10",
-    "@types/node": "^10.12.15",
-    "jest": "^23.6.0",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
-    "typescript": "^3.2.2"
+    "@types/jest": "^24.0.19",
+    "@types/node": "^12.7.12",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
   },
   "dependencies": {}
 }
