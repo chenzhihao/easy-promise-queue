@@ -1,6 +1,6 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "engines": {
     "node": ">=8.0.0"
   },

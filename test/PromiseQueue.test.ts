@@ -126,40 +126,6 @@ describe("When the concurrency limit is 1", () => {
       done();
     }, 200);
   });
-
-  // it("queue would be stopped after rejected promise", (done) => {
-  //   const promiseQueue = new PromiseQueue({concurrency: 1});
-  //   promiseQueue.add(() => {
-  //     return new Promise((resolve) => {
-  //       assert.strictEqual(promiseQueue.ongoingCount, 1);
-  //       setTimeout(() => {
-  //         resolve(1);
-  //       }, 50);
-  //     });
-  //   });
-  //
-  //   promiseQueue.add(() => {
-  //     return new Promise((_, reject) => {
-  //       setTimeout(() => {
-  //         reject(2);
-  //       }, 50);
-  //     });
-  //   });
-  //
-  //   promiseQueue.add(() => {
-  //     return new Promise((resolve) => {
-  //       setTimeout(() => {
-  //         resolve(3);
-  //       }, 50);
-  //     });
-  //   });
-  //
-  //   setTimeout(() => {
-  //     assert.strictEqual(promiseQueue.ongoingCount, 0);
-  //     assert.strictEqual(promiseQueue.waitingCount, 1);
-  //     done();
-  //   }, 200);
-  // });
 });
 
 describe("When the concurrency limit is 2", () => {
