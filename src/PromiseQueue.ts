@@ -8,7 +8,7 @@ export default class PromiseQueue {
   private _queue: Array<() => any>;
   private _pause: boolean;
   private _ongoingCount: number;
-  private _concurrency: number;
+  private readonly _concurrency: number;
 
   constructor(opts: IPromiseQueueOpts) {
     this._queue = [];
@@ -51,10 +51,12 @@ export default class PromiseQueue {
           (fn as () => Promise<any>)().then(
             (val: any) => {
               resolve(val);
+              this._ongoingCount--;
               this._next();
             },
             (err: Error) => {
               reject(err);
+              this._ongoingCount--;
               this._next();
             },
           );
@@ -83,11 +85,9 @@ export default class PromiseQueue {
   private _resolveEmpty: () => void = () => undefined;
 
   private _next() {
-    if (this._pause) {
+    if (this._ongoingCount >= this._concurrency || this._pause) {
       return;
     }
-
-    this._ongoingCount--;
 
     if (this._queue.length > 0) {
       const firstQueueTask = this._queue.shift();

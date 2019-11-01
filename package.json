@@ -1,6 +1,6 @@
 {
   "name": "easy-promise-queue",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "engines": {
     "node": ">=8.0.0"
   },
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --declaration",
-	"prepublishOnly:": "npm build"
+    "prepublishOnly:": "npm build"
   },
   "author": "cabtravis@gmail.com",
   "license": "MIT",
@@ -32,8 +32,8 @@
     "waterfall"
   ],
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/node": "^12.7.12",
+    "@types/jest": "^24.0.20",
+    "@types/node": "^12.11.7",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
